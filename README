@@ -1,0 +1,76 @@
+Copyright 2022 Diaconu Tudor-Gabriel
+
+Tema 3 Protocoale de Comunicatii 2022
+PROTOCOLUL HTTP
+
+In cadrul temei, am implementat o aplicatie ce primeste comenzi de la tastatura, 
+in terminal, si efectueaza anumite operatii in functie de comenzile primite.
+
+Pentru a nu mentiona in cadrul fiecarei comenzi voi scrie doar aici faptul ca
+am deschis cate o conexiune la server pentru fiecare comanda, inchizand-o de
+asemenea la finalul efectuarii comenzii respective.
+
+De asemenea, am ales sa compun manual mesajele de format JSON, intrucat mi s-a
+parut mai simplu in acest mod, avand in vedere ca cel mai lung mesaj era cel
+de la add_book si nu avea decat 5 field-uri.
+
+Nu in ultimul rand, in cadrul tuturor comenzilor am implementat in mod similar
+extragerea numarului de la raspunsul HTTP.
+
+Comenzile:
+    1. Register
+        In cadrul comenzii de inregistrare, citeam username-ul si parola si
+        verificam sa nu contina spatii sau sa nu fie ceva gol. Apoi, am creat
+        un string de format JSON care sa contina username-ul si parola si l-am
+        inclus in cererea POST pe care am trimis-o la server. Apoi, din numarul
+        primit ca raspuns de la server, am tratat toate cazurile posibile.
+
+    2. Login
+        La login, citirea se comporta asemanator cu cea de la inregistrare, la
+        fel si compunerea string-ului JSON, diferenta intre inregistrare si
+        login fiind tratarea cazurilor de eroare, aici putand aparea mai multe
+        si, de asemenea, salvarea, in caz de succes, a id-ului de sesiune
+        pentru a-l trimite ca cookie la urmatoarele cereri care necesita logare.
+
+    3. Enter library
+        Pentru aceasta comanda, am implementat o cerere de GET la url-ul
+        indicat si, in caz de succes, am extras token-ul JWT pentru a-l trimite
+        la urmatoarele cereri care necesita token-ul.
+
+    4. Get books
+        Pentru comanda aceasta, am implementat de asemenea, o cerere de GET si,
+        in caz de succes, printam lista JSON de carti primita in payload-ul
+        raspunsului de la server.
+
+    5. Get book
+        Pentru comanda de obtinere a unei carti specifice, am citit id-ul dorit
+        ca string, pentru a putea construi acel url mai simplu. Apoi, am trimis
+        cererea de GET la url-ul personalizat si am tratat cazurile de eroare
+        sau de succes, in functie de codul HTTP primit la raspuns.
+
+    6. Add book
+        Pentru comanda de adaugare a unei carti, am realizat citirea tuturor
+        field-urilor necesare, am creat string-ul JSON, am creat cererea POST
+        si am trimis-o, iar, la tratarea cazurilor de eroare, am verificat
+        fiecare caz posibil.
+
+    7. Delete book
+        Comanda de stergere a unei carti se comporta similar cu comanda de
+        Get book, singura diferenta fiind faptul ca cererea este de tip
+        DELETE in loc de GET.
+
+    8. Logout
+        Pentru logout, am trimis o cerere GET la url-ul indicat si am tratat
+        cazurile de succes/eroare.
+
+    9. Exit
+        In caz de exit, programul iese din ciclul in care efectua citirea
+        comenzilor si implementarea lor.
+
+Mai trebuie mentionat faptul ca sursele de requests, helpers si buffer le-am
+luat din scheletul laboratorului de HTTP.
+La final am eliberat in client toata memoria utilizata.
+
+Feedback tema:
+O tema interesanta care m-a facut sa inteleg si mai bine modul in care
+functioneaza protocolul HTTP.
